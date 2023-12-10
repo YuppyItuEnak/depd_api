@@ -188,6 +188,7 @@ class _HomePageState extends State<HomePage> {
                           Spacer(
                             flex: 1,
                           ),
+                          
                           Expanded(
                               flex: 3,
                               child: FutureBuilder<List<City>>(
@@ -201,6 +202,11 @@ class _HomePageState extends State<HomePage> {
                                     if (snapshot.hasData) {
                                       return DropdownButton(
                                           isExpanded: true,
+                                          value: selectedCityDestination,
+                                          hint: selectedCityDestination == null
+                                              ? Text("Pilih kota")
+                                              : Text(selectedCityDestination
+                                                  .cityName),
                                           items: snapshot.data
                                               ?.map<DropdownMenuItem<City>>(
                                                   (City value) {
@@ -209,9 +215,9 @@ class _HomePageState extends State<HomePage> {
                                                 child: Text(
                                                     value.cityName.toString()));
                                           }).toList(),
-                                          onChanged: (value) {
+                                          onChanged: (newvalue) {
                                             setState(() {
-                                              selectedCityOrigin = value;
+                                              selectedCityOrigin = newvalue;
                                               cityIdOrigin =
                                                   selectedCityOrigin.cityId;
                                             });
@@ -232,7 +238,9 @@ class _HomePageState extends State<HomePage> {
                                   }))
                         ],
                       ),
-                      Spacer( flex: 1,),
+                      Spacer(
+                        flex: 1,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
